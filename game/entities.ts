@@ -247,8 +247,8 @@ export class Boy {
 
     fireworks.forEach(fw => {
         const dist = Math.abs(fw.x - this.x);
-        const isGround = ['anar', 'chakri', 'flower_pot', 'sutli', 'garland', 'ladi', 'c4', 'double_bomb', 'petrol_bomb', 'smoke_bomb'].includes(fw.type);
-        const isLoud = ['sutli', 'c4', 'mega_shot', 'double_bomb', 'petrol_bomb'].includes(fw.type);
+        const isGround = ['anar', 'chakri', 'flower_pot', 'sutli', 'garland', 'ladi', 'c4', 'double_bomb', 'petrol_bomb', 'smoke_bomb', 'flash_bang', 'molotov'].includes(fw.type);
+        const isLoud = ['sutli', 'c4', 'mega_shot', 'double_bomb', 'petrol_bomb', 'flash_bang'].includes(fw.type);
         const isAerial = !isGround;
 
         // Danger Logic
@@ -696,7 +696,7 @@ export class Firework {
       SoundManager.playLaunch();
     } else if (type === 'mega_shot' || type === 'dragon' || type === 'japanese_skyshot' || type === 'indian_skyshot') {
       SoundManager.playLaunch('heavy'); 
-    } else if (['sutli', 'c4', 'double_bomb', 'petrol_bomb'].includes(type)) {
+    } else if (['sutli', 'c4', 'double_bomb', 'petrol_bomb', 'flash_bang', 'smoke_grenade', 'molotov'].includes(type)) {
       SoundManager.playExplosion('pop', 0.1); 
     } else if (type === 'anar' || type === 'chakri' || type === 'smoke_bomb' || type === 'flower_pot') {
       SoundManager.playSparkle(0.1);
@@ -759,7 +759,8 @@ export class Firework {
         else if (this.type === 'c4') this.life = 120;
         else if (this.type === 'double_bomb') this.life = 60; 
         else if (this.type === 'double_bomb_2') this.life = 15; 
-        else if (this.type === 'petrol_bomb') this.life = 80; 
+        else if (this.type === 'petrol_bomb' || this.type === 'molotov' || this.type === 'smoke_grenade') this.life = 80; 
+        else if (this.type === 'flash_bang') this.life = 50;
         else this.life = 100 + Math.random() * 50;
     }
   }
@@ -1304,7 +1305,7 @@ export class Firework {
         particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30 + Math.random() * 20, 2.5));
       }
     }
-    else if (type === 'petrol_bomb') {
+    else if (type === 'petrol_bomb' || type === 'molotov') {
       SoundManager.playExplosion('fire', 1.0);
       const count = 100;
       const baseHue = Math.random() * 360;
@@ -1409,6 +1410,27 @@ export class Firework {
         particles.push(p);
       }
     }
+    else if (type === 'flash_bang') {
+        SoundManager.playExplosion('c4', 1.5);
+        if (callbacks && callbacks.shakeScreen) callbacks.shakeScreen(40);
+        // Intense white burst
+        for(let i=0; i<80; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 20 + 10;
+            particles.push(new Particle(this.x, this.y, '#ffffff', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 20 + Math.random() * 10, 2.5, 0.1));
+        }
+    }
+    else if (type === 'smoke_grenade') {
+        SoundManager.playExplosion('pop', 0.5);
+        SoundManager.playSparkle(0.2); // Hiss sound
+        const count = 50;
+        for(let i=0; i<count; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const speed = Math.random() * 3 + 1;
+            const p = new Particle(this.x, this.y, '#808080', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 150 + Math.random() * 100, 4, -0.02, 0.95, false, true);
+            particles.push(p);
+        }
+    }
     else {
         SoundManager.playExplosion('standard', 0.8);
         const count = 40;
@@ -1471,6 +1493,9 @@ export class Firework {
       else if (this.type === 'japanese_skyshot') ctx.fillStyle = '#ff99cc';
       else if (this.type === 'indian_skyshot') ctx.fillStyle = '#ff9933';
       else if (this.type === 'flower_shot') ctx.fillStyle = '#ff69b4';
+      else if (this.type === 'flash_bang') ctx.fillStyle = '#FFD700';
+      else if (this.type === 'smoke_grenade') ctx.fillStyle = '#808080';
+      else if (this.type === 'molotov') ctx.fillStyle = '#FF4500';
       
       let w = PIXEL_SIZE;
       let h = PIXEL_SIZE * 2;

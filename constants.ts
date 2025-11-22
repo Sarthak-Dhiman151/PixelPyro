@@ -43,5 +43,8 @@ export const FIRECRACKER_TYPES: FireworkDef[] = [
   { id: 'double_bomb', name: 'Double Bomb', color: '#9933ff', icon: Layers, category: 'Bombs' },
   { id: 'petrol_bomb', name: 'Petrol Bomb', color: '#ff5500', icon: Droplets, category: 'Bombs' },
   { id: 'ladi', name: 'Ladi', color: '#ff55ff', icon: Zap, category: 'Bombs' },
-  { id: 'c4', name: 'C4', color: '#aaaaaa', icon: Package, category: 'Bombs' }
+  { id: 'c4', name: 'C4', color: '#aaaaaa', icon: Package, category: 'Bombs' },
+  { id: 'flash_bang', name: 'Flash Bang', color: '#FFD700', icon: Sun, category: 'Bombs' },
+  { id: 'smoke_grenade', name: 'Smoke Grenade', color: '#808080', icon: Wind, category: 'Bombs' },
+  { id: 'molotov', name: 'Molotov', color: '#FF4500', icon: Flame, category: 'Bombs' }
 ];
