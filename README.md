@@ -4,6 +4,8 @@
 
 ![Pixel Pyro Banner](https://placehold.co/800x300/050510/eab308?text=PIXEL+PYRO&font=roboto)
 
+Play Here: https://pixelpyro.vercel.app/
+
 ##  Key Features
 
 ###  Diverse Arsenal of Fireworks
