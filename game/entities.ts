@@ -855,7 +855,7 @@ export class Firework {
             for(let i=0; i<20; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const speed = Math.random() * 4 + 2;
-                particles.push(new Particle(this.x, this.y, `hsl(${hue}, 100%, 60%)`, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 20, 1.0));
+                particles.push(new Particle(this.x, this.y, `hsl(${hue}, 100%, 60%)`, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 20, 0.5 + Math.random() * 1.5));
             }
         }
         
@@ -951,7 +951,7 @@ export class Firework {
               color, 
               {x: Math.cos(angle) * speed * 0.6, y: Math.sin(angle) * speed}, 
               40 + Math.random() * 20, 
-              1.0, 
+              1.0 + Math.random() * 0.5, 
               0.15, 
               0.92
           ));
@@ -1034,7 +1034,7 @@ export class Firework {
     const col = (Math.floor(Date.now() / 100) % 2 === 0) ? this.chakriTheme[0] : this.chakriTheme[1];
     for(let k=0; k<2; k++) {
         const a = angle + (k * Math.PI);
-        particles.push(new Particle(this.x, this.y - 5, col, {x: Math.cos(a) * 7, y: Math.sin(a) * 2}, 20, 1, 0.1));
+        particles.push(new Particle(this.x, this.y - 5, col, {x: Math.cos(a) * 7, y: Math.sin(a) * 2}, 20, 1 + Math.random() * 0.5, 0.1));
     }
   }
 
@@ -1050,7 +1050,7 @@ export class Firework {
         else if (this.anarVariant === 1) col = Math.random() > 0.9 ? '#aaf' : '#ffffff';
         else if (this.anarVariant === 2) col = Math.random() > 0.9 ? '#ffaa00' : '#ff0000';
         else col = `hsl(${Math.random() * 360}, 100%, 60%)`;
-        particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed * 0.4, y: Math.sin(angle) * speed}, 30 + Math.random() * 20, 1, 0.15, 0.9));
+        particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed * 0.4, y: Math.sin(angle) * speed}, 30 + Math.random() * 20, 1 + Math.random() * 0.8, 0.15, 0.9));
     }
   }
 
@@ -1064,7 +1064,7 @@ export class Firework {
     for(let i=0; i<10; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 5 + 2;
-      particles.push(new Particle(x, y, popColor, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 10, 0.8));
+      particles.push(new Particle(x, y, popColor, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 10, 0.8 + Math.random() * 1.2));
     }
   }
 
@@ -1095,7 +1095,7 @@ export class Firework {
               col, 
               {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 
               45 + Math.random() * 20, // Longer life
-              1.5 * Math.random(),     // Varied small sizes
+              0.5 + Math.random() * 2.0, // Randomized size (0.5 to 2.5x)
               0.04,                    // Slightly less gravity
               0.93                     // More friction for floaty effect
           );
@@ -1112,7 +1112,7 @@ export class Firework {
         for(let i=0; i<12; i++) {
             const a = Math.random() * Math.PI * 2;
             const s = Math.random() * 2;
-            particles.push(new Particle(this.x, this.y, centerColor, {x: Math.cos(a)*s, y: Math.sin(a)*s}, 40, 1.5, 0.05, 0.9));
+            particles.push(new Particle(this.x, this.y, centerColor, {x: Math.cos(a)*s, y: Math.sin(a)*s}, 40, 1.0 + Math.random() * 1.5, 0.05, 0.9));
         }
 
         // Petals (Rose Curve k=5)
@@ -1129,7 +1129,7 @@ export class Firework {
             const vy = r * Math.sin(theta);
 
             // High friction to keep shape
-            const p = new Particle(this.x, this.y, petalColor, {x: vx, y: vy}, 60 + Math.random()*20, 1.5, 0.04, 0.92);
+            const p = new Particle(this.x, this.y, petalColor, {x: vx, y: vy}, 60 + Math.random()*20, 1.0 + Math.random(), 0.04, 0.92);
             p.flicker = true;
             particles.push(p);
             
@@ -1138,7 +1138,7 @@ export class Firework {
                  const r2 = 5 * Math.abs(rBase);
                  const vx2 = r2 * Math.cos(theta);
                  const vy2 = r2 * Math.sin(theta);
-                 particles.push(new Particle(this.x, this.y, petalColor, {x: vx2, y: vy2}, 60, 1.2, 0.04, 0.92));
+                 particles.push(new Particle(this.x, this.y, petalColor, {x: vx2, y: vy2}, 60, 0.8 + Math.random(), 0.04, 0.92));
             }
         }
     }
@@ -1149,7 +1149,7 @@ export class Firework {
         for (let i = 0; i < 24; i++) {
             const angle = (Math.PI * 2 * i) / 24;
             const speed = 2.5;
-            particles.push(new Particle(this.x, this.y, '#ffffff', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 50, 1.2, 0.02, 0.94));
+            particles.push(new Particle(this.x, this.y, '#ffffff', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 50, 0.8 + Math.random() * 0.8, 0.02, 0.94));
         }
         
         // Outer Shell (Petals) - Hanabi Style (Perfect Sphere)
@@ -1159,7 +1159,7 @@ export class Firework {
             const speed = 9;
             const col = `hsl(${baseHue}, 100%, 60%)`;
             // High friction (0.9) causes them to stop in a spherical formation
-            const p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 100, 1.8, 0.035, 0.92);
+            const p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 100, 1.5 + Math.random() * 1.0, 0.035, 0.92);
             p.flicker = true;
             particles.push(p);
         }
@@ -1169,7 +1169,7 @@ export class Firework {
              const angle = (Math.PI * 2 * i) / count;
              const speed = 9.5; 
              const col = `hsl(${(baseHue + 30) % 360}, 100%, 70%)`;
-             const p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 100, 1.8, 0.035, 0.92);
+             const p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 100, 1.5 + Math.random() * 1.0, 0.035, 0.92);
              p.flicker = true;
              particles.push(p);
         }
@@ -1193,7 +1193,7 @@ export class Firework {
                 col, 
                 {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 
                 70 + Math.random() * 20, 
-                1.8, 
+                1.0 + Math.random() * 1.5, // Varied size
                 0.04, 
                 0.93
             );
@@ -1211,7 +1211,7 @@ export class Firework {
                  '#000080', // Navy Blue
                  {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 
                  60, 
-                 1.5, 
+                 1.0 + Math.random(), 
                  0.03, 
                  0.95
              );
@@ -1227,7 +1227,7 @@ export class Firework {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 8 + 3;
           const col = multi ? `hsl(${Math.random() * 360}, 100%, 60%)` : `hsl(${hue}, 100%, 50%)`;
-          const size = 1.2 * (0.8 + Math.random() * 0.5);
+          const size = 0.5 + Math.random() * 2.0;
           particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 60, size, 0.05, 0.92));
       }
     }
@@ -1239,7 +1239,7 @@ export class Firework {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 10 + 2;
           const col = Math.random() > 0.5 ? `hsl(${hue}, 100%, 60%)` : '#ffd700'; 
-          const size = 1.5 * (0.8 + Math.random());
+          const size = 0.8 + Math.random() * 1.8;
           const p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 80 + Math.random() * 20, size, 0.04, 0.91, true); 
           p.flicker = true;
           particles.push(p);
@@ -1264,7 +1264,7 @@ export class Firework {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 7 + 1;
           const col = `hsl(${hue + Math.random() * 60}, 100%, 85%)`; 
-          particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 90, 1.0, 0.01, 0.92));
+          particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 90, 0.5 + Math.random(), 0.01, 0.92));
       }
     }
     else if (type === 'double') {
@@ -1274,12 +1274,12 @@ export class Firework {
       for (let i = 0; i < 40; i++) {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 8 + 4; 
-          particles.push(new Particle(this.x, this.y, `hsl(${hue2}, 100%, 50%)`, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 50, 1.4, 0.03, 0.9));
+          particles.push(new Particle(this.x, this.y, `hsl(${hue2}, 100%, 50%)`, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 50, 1.0 + Math.random(), 0.03, 0.9));
       }
       for (let i = 0; i < 20; i++) {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 4;
-          particles.push(new Particle(this.x, this.y, '#fff', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30, 1.0));
+          particles.push(new Particle(this.x, this.y, '#fff', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30, 0.5 + Math.random()));
       }
     }
     else if (type === 'sutli') {
@@ -1290,7 +1290,7 @@ export class Firework {
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 12 + 5;
         const col = Math.random() > 0.5 ? `hsl(${hue}, 70%, 40%)` : '#ffffff'; 
-        particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 15 + Math.random() * 10, 2.0));
+        particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 15 + Math.random() * 10, 1.5 + Math.random() * 2.0));
       }
     }
     else if (type === 'c4') {
@@ -1302,7 +1302,7 @@ export class Firework {
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 15 + 5;
         const col = Math.random() > 0.7 ? `hsl(${hue}, 100%, 50%)` : '#888888'; 
-        particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30 + Math.random() * 20, 2.5));
+        particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30 + Math.random() * 20, 1.5 + Math.random() * 3.0));
       }
     }
     else if (type === 'petrol_bomb' || type === 'molotov') {
@@ -1328,7 +1328,7 @@ export class Firework {
              else col = '#333333';
          }
          
-         let p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed + (Math.random()-0.5)*2, y: Math.sin(angle) * speed}, 60, 1.5 + Math.random(), -0.02);
+         let p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed + (Math.random()-0.5)*2, y: Math.sin(angle) * speed}, 60, 1.0 + Math.random() * 2.0, -0.02);
          p.flicker = true;
          particles.push(p);
       }
@@ -1343,7 +1343,7 @@ export class Firework {
             const speed = (Math.random() * 10 + 4); 
             const life = 50 + Math.random() * 20; 
             const col = Math.random() > 0.8 ? '#ffffff' : `hsl(${hue}, 100%, 60%)`;
-            let p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, life, 2.2, 0.03, 0.95, 'mega_1');
+            let p = new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, life, 1.5 + Math.random() * 1.5, 0.03, 0.95, 'mega_1');
             particles.push(p);
         }
     }
@@ -1354,7 +1354,7 @@ export class Firework {
         for (let i = 0; i < count; i++) {
             const angle = Math.random() * Math.PI * 2;
             const speed = Math.random() * 8 + 2;
-            particles.push(new Particle(this.x, this.y, color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 50 + Math.random() * 20, 1.2 + Math.random()));
+            particles.push(new Particle(this.x, this.y, color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 50 + Math.random() * 20, 1.0 + Math.random() * 1.5));
         }
     }
     else if (type === 'double_bomb') {
@@ -1365,7 +1365,7 @@ export class Firework {
        for(let i=0; i<count; i++) {
            const angle = Math.random() * Math.PI * 2;
            const speed = Math.random() * 8 + 2;
-           particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30, 2.0));
+           particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30, 1.0 + Math.random() * 2.0));
        }
        const bomb2 = new Firework(this.x, this.y, 'double_bomb_2', this.height);
        bomb2.x = this.x; bomb2.y = this.y; bomb2.vx = 0; bomb2.vy = 0; bomb2.life = 15;
@@ -1380,7 +1380,7 @@ export class Firework {
        for(let i=0; i<count; i++) {
            const angle = Math.random() * Math.PI * 2;
            const speed = Math.random() * 12 + 4;
-           particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 40, 2.5));
+           particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 40, 1.5 + Math.random() * 2.0));
        }
     }
     else if (type === 'cyclone') {
@@ -1391,7 +1391,7 @@ export class Firework {
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 8 + 2;
-        let p = new Particle(this.x, this.y, color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 70, 1.2, 0.05, 0.9);
+        let p = new Particle(this.x, this.y, color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 70, 1.0 + Math.random(), 0.05, 0.9);
         p.flicker = true;
         particles.push(p);
       }
@@ -1405,7 +1405,7 @@ export class Firework {
         const speed = (Math.random() * 9 + 3);
         const r = Math.random();
         let color = r > 0.6 ? '#ffffff' : r > 0.3 ? '#ffffe0' : '#d0e0ff';
-        let p = new Particle(this.x, this.y, color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 80, 1.5, 0.03, 0.94, true);
+        let p = new Particle(this.x, this.y, color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 80, 1.0 + Math.random() * 1.5, 0.03, 0.94, true);
         p.flicker = true;
         particles.push(p);
       }
@@ -1417,7 +1417,7 @@ export class Firework {
         for(let i=0; i<80; i++) {
             const angle = Math.random() * Math.PI * 2;
             const speed = Math.random() * 20 + 10;
-            particles.push(new Particle(this.x, this.y, '#ffffff', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 20 + Math.random() * 10, 2.5, 0.1));
+            particles.push(new Particle(this.x, this.y, '#ffffff', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 20 + Math.random() * 10, 1.0 + Math.random() * 3.0, 0.1));
         }
     }
     else if (type === 'smoke_grenade') {
@@ -1439,7 +1439,7 @@ export class Firework {
             const angle = Math.random() * Math.PI * 2;
             const speed = Math.random() * 6 + 2;
             const col = Math.random() > 0.3 ? `hsl(${hue}, 100%, 60%)` : '#ffffff';
-            particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 40 + Math.random()*20, 1 + Math.random()));
+            particles.push(new Particle(this.x, this.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 40 + Math.random()*20, 0.5 + Math.random() * 2.5));
         }
     }
   }
@@ -1516,7 +1516,7 @@ export const createSubBurst = (p: Particle, particles: Particle[]) => {
     for(let i=0; i<6; i++) {
       const angle = Math.random() * Math.PI * 2;
       const speed = Math.random() * 3 + 1;
-      particles.push(new Particle(p.x, p.y, Math.random() > 0.5 ? '#ffffff' : p.color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 20 + Math.random() * 10, 0.8, 0.05, 0.9));
+      particles.push(new Particle(p.x, p.y, Math.random() > 0.5 ? '#ffffff' : p.color, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 20 + Math.random() * 10, 0.5 + Math.random() * 0.8, 0.05, 0.9));
     }
     return;
   }
@@ -1527,7 +1527,7 @@ export const createSubBurst = (p: Particle, particles: Particle[]) => {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 4 + 2;
           const col = `hsl(${Math.random() * 360}, 100%, 60%)`;
-          particles.push(new Particle(p.x, p.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30 + Math.random() * 10, 1.2, 0.05, 0.92, 'mega_2'));
+          particles.push(new Particle(p.x, p.y, col, {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 30 + Math.random() * 10, 1.0 + Math.random(), 0.05, 0.92, 'mega_2'));
       }
       return;
   }
@@ -1536,7 +1536,7 @@ export const createSubBurst = (p: Particle, particles: Particle[]) => {
       for(let i=0; i<count; i++) {
           const angle = Math.random() * Math.PI * 2;
           const speed = Math.random() * 2 + 0.5;
-          particles.push(new Particle(p.x, p.y, '#ffd700', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 80 + Math.random() * 40, 0.8, 0.08, 0.96, false));
+          particles.push(new Particle(p.x, p.y, '#ffd700', {x: Math.cos(angle) * speed, y: Math.sin(angle) * speed}, 80 + Math.random() * 40, 0.5 + Math.random() * 0.5, 0.08, 0.96, false));
       }
   }
 };
