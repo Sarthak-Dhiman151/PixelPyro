@@ -22,7 +22,7 @@ const PixelPyroApp: React.FC = () => {
   }, []);
 
   return (
-    <div className="h-screen w-screen relative bg-[#050510] flex flex-col font-sans select-none overflow-hidden">
+    <div className="h-[100dvh] w-screen relative bg-[#050510] flex flex-col font-sans select-none overflow-hidden">
       {/* Game Layer */}
       <GameCanvas 
         gameStarted={gameStarted} 
@@ -35,23 +35,35 @@ const PixelPyroApp: React.FC = () => {
       
       {/* HUD */}
       {gameStarted && (
-        <>
-          <div className="absolute top-4 left-4 flex flex-col pointer-events-none z-20">
+        <div 
+          className="absolute top-0 left-0 w-full pointer-events-none z-20 p-4"
+          style={{ 
+            paddingTop: 'max(1rem, env(safe-area-inset-top))',
+            paddingLeft: 'max(1rem, env(safe-area-inset-left))',
+            paddingRight: 'max(1rem, env(safe-area-inset-right))'
+          }}
+        >
+          <div className="flex flex-col items-start pointer-events-auto">
             <h1 className="text-lg md:text-xl text-yellow-400 pixel-text opacity-50 drop-shadow-md">PIXEL PYRO</h1>
             <button 
               onClick={() => setGameStarted(false)} 
-              className="pointer-events-auto mt-2 w-fit bg-red-500 text-white text-[10px] px-2 py-1 border border-white shadow-[2px_2px_0px_#000] active:translate-y-[1px] active:shadow-[1px_1px_0px_#000] pixel-text hover:bg-red-400"
+              className="mt-2 w-fit bg-red-500 text-white text-[10px] px-2 py-1 border border-white shadow-[2px_2px_0px_#000] active:translate-y-[1px] active:shadow-[1px_1px_0px_#000] pixel-text hover:bg-red-400"
             >
               EXIT
             </button>
           </div>
+        </div>
+      )}
 
-          <div 
-            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none transition-opacity duration-1000 z-20 ${showInstruction ? 'opacity-100' : 'opacity-0'}`}
-          >
-            <p className="text-sm text-white pixel-text bg-black/50 p-2 border border-white">TAP TO IGNITE</p>
-          </div>
-        </>
+      {/* Instruction Overlay */}
+      {gameStarted && (
+        <div 
+          className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none transition-opacity duration-1000 z-20 ${showInstruction ? 'opacity-100' : 'opacity-0'}`}
+        >
+          <p className="text-sm text-white pixel-text bg-black/50 p-2 border border-white whitespace-nowrap">
+            TAP OR DRAG TO IGNITE
+          </p>
+        </div>
       )}
 
       {/* Controls */}

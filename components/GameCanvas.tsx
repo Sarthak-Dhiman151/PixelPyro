@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useCallback } from 'react';
 import { PIXEL_SIZE, STAR_COUNT, FIRECRACKER_TYPES } from '../constants';
 import { GameState, GameCallbacks } from '../types';
@@ -14,6 +13,8 @@ interface GameCanvasProps {
 export const GameCanvas: React.FC<GameCanvasProps> = ({ gameStarted, currentType, onMoonHit }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const requestRef = useRef<number>(0);
+  const lastLaunchRef = useRef<number>(0);
+  const isDraggingRef = useRef<boolean>(false);
   
   const gameState = useRef<GameState>({
     width: 0,
@@ -369,23 +370,12 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({ gameStarted, currentType
     }
   }, []);
 
-  const handleInput = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!gameStarted) return;
-    e.preventDefault(); // Prevent scrolling on touch
+  const processInput = (clientX: number, clientY: number) => {
+    if (!canvasRef.current) return;
+    
     SoundManager.init();
     
-    if (!canvasRef.current) return;
     const rect = canvasRef.current.getBoundingClientRect();
-    
-    let clientX, clientY;
-    if ('changedTouches' in e) {
-      clientX = e.changedTouches[0].clientX;
-      clientY = e.changedTouches[0].clientY;
-    } else {
-      clientX = (e as React.MouseEvent).clientX;
-      clientY = (e as React.MouseEvent).clientY;
-    }
-
     const x = clientX - rect.left;
     const y = clientY - rect.top;
     const { width, height, boy } = gameState.current;
@@ -419,6 +409,42 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({ gameStarted, currentType
     }
   };
 
+  const handleInput = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!gameStarted) return;
+    
+    // Throttle move events
+    if (e.type === 'mousemove' || e.type === 'touchmove') {
+        if (Date.now() - lastLaunchRef.current < 80) return; // Throttle to ~12fps spawn rate for dragging
+    }
+    lastLaunchRef.current = Date.now();
+    
+    let clientX, clientY;
+    if ('changedTouches' in e) {
+      clientX = e.changedTouches[0].clientX;
+      clientY = e.changedTouches[0].clientY;
+    } else {
+      clientX = (e as React.MouseEvent).clientX;
+      clientY = (e as React.MouseEvent).clientY;
+    }
+
+    processInput(clientX, clientY);
+  };
+
+  // Helper wrappers for drag support
+  const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
+      isDraggingRef.current = true;
+      handleInput(e);
+  };
+
+  const handleEnd = () => {
+      isDraggingRef.current = false;
+  };
+
+  const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
+      if (!isDraggingRef.current) return;
+      handleInput(e);
+  };
+
   // --- Effects ---
   useEffect(() => {
     window.addEventListener('resize', handleResize);
@@ -438,8 +464,13 @@ export const GameCanvas: React.FC<GameCanvasProps> = ({ gameStarted, currentType
       <canvas 
         ref={canvasRef} 
         className="absolute top-0 left-0 w-full h-full block image-pixelated"
-        onMouseDown={handleInput}
-        onTouchStart={handleInput}
+        onMouseDown={handleStart}
+        onMouseMove={handleMove}
+        onMouseUp={handleEnd}
+        onMouseLeave={handleEnd}
+        onTouchStart={handleStart}
+        onTouchMove={handleMove}
+        onTouchEnd={handleEnd}
       />
     </div>
   );

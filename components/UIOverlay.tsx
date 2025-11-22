@@ -35,14 +35,17 @@ interface ToolbarProps {
 
 export const Toolbar: React.FC<ToolbarProps> = ({ activeCategory, currentType, onCategorySelect, onTypeSelect }) => {
   return (
-    <div className="h-auto min-h-[110px] bg-[#1a1a2e] w-full flex flex-col justify-center items-center py-2 z-10 relative shadow-[0_-4px_10px_rgba(0,0,0,0.5)]">
+    <div 
+      className="h-auto min-h-[110px] bg-[#1a1a2e] w-full flex flex-col justify-center items-center py-2 z-10 relative shadow-[0_-4px_10px_rgba(0,0,0,0.5)]"
+      style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
+    >
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-3 py-1 border-2 border-[#1a1a2e]">
         <p className="text-[9px] text-black font-bold uppercase pixel-text tracking-widest">
           {activeCategory ? activeCategory : 'Categories'}
         </p>
       </div>
       
-      <div className="flex gap-3 justify-start md:justify-center overflow-x-auto no-scrollbar w-full px-4 pt-4 pb-2 scroll-smooth">
+      <div className="flex gap-3 justify-start overflow-x-auto no-scrollbar w-full px-4 pt-4 pb-2 scroll-smooth touch-pan-x">
         {activeCategory === null ? (
           CATEGORIES.map((cat) => (
             <button
