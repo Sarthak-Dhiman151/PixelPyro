@@ -1,0 +1,5 @@
+{
+  "name": "Pixel Pyro - Production Ready",
+  "description": "A robust, production-ready React application for simulating fireworks with pixel-art aesthetics. Features a modular architecture, optimized canvas rendering, sound management, and error handling.",
+  "requestFramePermissions": []
+}
